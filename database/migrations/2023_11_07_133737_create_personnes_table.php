@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('facebook')->nullable();
             $table->string('telephone')->nullable()->comment('Numéro de téléphone parent ou tuteur');
             $table->date('date_inscription')->nullable()->comment('Date d\'inscription');
+            $table->foreignId('filieres_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
