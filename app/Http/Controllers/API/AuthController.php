@@ -74,12 +74,7 @@ class AuthController extends Controller
                 'Validation_errors' => $validator->messages(),
             ]);
         }else{
-
-            return response()->json([
-                'request' => $request->all(),
-                'message' => 'Nous somme là'
-            ]);
-
+            
             $user = User::create([
                 'pseudo' => $request->pseudo,
                 'email' => $request->email,

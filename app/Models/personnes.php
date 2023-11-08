@@ -11,6 +11,8 @@ class personnes extends Model
 
     protected $table = 'personnes';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'photo',
         'numero_carte',
@@ -19,6 +21,7 @@ class personnes extends Model
         'date_de_naissance',
         'lieu_de_naissance',
         'filieres',
+        'niveau',
         'district',
         'adresse',
         'profession',

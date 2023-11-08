@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date_de_naissance')->nullable();
             $table->string('lieu_de_naissance', 255)->nullable();
             $table->string('filieres', 255)->nullable();
+            $table->string('niveau', 255)->nullable();
             $table->string('district', 255)->nullable();
             $table->string('adresse', 255)->nullable();
             $table->string('profession', 255)->nullable();
@@ -28,7 +29,6 @@ return new class extends Migration
             $table->string('facebook')->nullable();
             $table->string('telephone')->nullable()->comment('Numéro de téléphone parent ou tuteur');
             $table->date('date_inscription')->nullable()->comment('Date d\'inscription');
-            $table->timestamps();
         });
     }
 

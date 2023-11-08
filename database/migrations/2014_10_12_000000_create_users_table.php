@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('roles')->default(0)->comment("0: utilisateurs et 1 : administrateurs");
             $table->rememberToken();
-            $table->timestamps();
         });
     }
 

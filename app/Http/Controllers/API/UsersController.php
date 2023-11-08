@@ -114,8 +114,8 @@ class UsersController extends Controller
                         $file = $request->file('image');
                         $extension = $file->getClientOriginalExtension();
                         $filename = time() . '.' .$extension;
-                        $file->move("uploads/users/", $filename);
-                        $image = 'uploads/users/'.$filename;
+                        $file->move("uploads/utilisateurs/", $filename);
+                        $image = 'uploads/utilisateurs/'.$filename;
                     }else{
                         $image = null;
                     }
