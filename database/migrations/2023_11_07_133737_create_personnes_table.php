@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('prenom', 255)->nullable();
             $table->date('date_de_naissance')->nullable();
             $table->string('lieu_de_naissance', 255)->nullable();
-            $table->string('filieres', 255)->nullable();
             $table->string('niveau', 255)->nullable();
             $table->string('district', 255)->nullable();
             $table->string('adresse', 255)->nullable();

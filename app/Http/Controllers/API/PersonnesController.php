@@ -82,9 +82,6 @@ class PersonnesController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function ajouter_un_membre_fimpisava(Request $request)
     {
         $photo = $request->hasFile("photo");
@@ -134,7 +131,7 @@ class PersonnesController extends Controller
                 'prenom' => $prenom,
                 'date_de_naissance' => $date_de_naissance,
                 'lieu_de_naissance' => $lieu_de_naissance,
-                'filieres' => $filieres,
+                'filieres_id' => $filieres,
                 'niveau' => $niveau,
                 'district' => $district,
                 'adresse' => $adresse,
@@ -153,9 +150,6 @@ class PersonnesController extends Controller
         } 
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function afficher_un_membre(string $id)
     {
         try {
@@ -171,17 +165,11 @@ class PersonnesController extends Controller
             }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, personnes $personnes)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(personnes $personnes)
     {
         //

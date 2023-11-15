@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\FilieresController;
 use App\Http\Controllers\API\PersonnesController;
 use App\Http\Controllers\API\UsersController;
 
@@ -26,6 +27,12 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     /** ------------------------------------- Déconnection -------------------------------------------**/
     Route::post('logout', [AuthController::class, 'logout']);
+
+    /** ------------------------------------------- Filières -------------------------------------------- **/
+    Route::get('liste_des_filieres', [FilieresController::class, 'liste_des_filieres']);
+    Route::post('ajouter_un_filiere', [FilieresController::class, 'ajouter_un_filiere']); 
+    Route::get('recherche_un_filiere/{value}', [FilieresController::class, 'recherche_un_filiere']);  
+    Route::post('supprimer_un_filiere/{id}', [FilieresController::class, 'supprimer_un_filiere']);  
 
     /** -------------------------------------------   Membres FI.MPI.SAVA -------------------------------- **/
 

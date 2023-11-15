@@ -20,7 +20,7 @@ class personnes extends Model
         'prenom',
         'date_de_naissance',
         'lieu_de_naissance',
-        'filieres',
+        'filieres_id',
         'niveau',
         'district',
         'adresse',
@@ -31,6 +31,12 @@ class personnes extends Model
         'telephone',
         'date_inscription',
     ];
+
+    protected $with = ['filieres'];
+
+    public function filieres(){
+        return $this->belongsTo(filieres::class, 'filieres_id', 'id');
+    }
 
 
 }
