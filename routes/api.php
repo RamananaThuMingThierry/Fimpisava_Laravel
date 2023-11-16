@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     /** ------------------------------------------- Filières -------------------------------------------- **/
     Route::get('liste_des_filieres', [FilieresController::class, 'liste_des_filieres']);
     Route::post('ajouter_un_filiere', [FilieresController::class, 'ajouter_un_filiere']); 
+    Route::get('obtenir_un_filiere/{id}', [FilieresController::class, 'obtenir_un_filiere']); 
     Route::get('recherche_un_filiere/{value}', [FilieresController::class, 'recherche_un_filiere']);  
     Route::post('supprimer_un_filiere/{id}', [FilieresController::class, 'supprimer_un_filiere']);  
 

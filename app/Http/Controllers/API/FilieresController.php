@@ -10,10 +10,11 @@ use App\Http\Controllers\Controller;
 class FilieresController extends Controller
 {
     public function liste_des_filieres(){
-        $filieres =  filieres::orderBy('nom_filieres', 'asc')->get();
+        $liste_des_filieres =  filieres::orderBy('nom_filieres', 'asc')->get();
+     
         return response()->json([
           'status' => 200,
-          'liste_des_filieres' => $filieres,
+          'liste_des_filieres' => $liste_des_filieres,
         ]);
       }
 
@@ -60,9 +61,19 @@ class FilieresController extends Controller
         }
     }
 
-    public function show(filieres $filieres)
+    public function obtenir_un_filiere(string $id)
     {
-        //
+        try {
+            $filiere = DB::table('filieres')->where('id', $id)->first();
+                if ($filiere) {
+                    return response()->json(['filiere' => $filiere, 'status' => 200], 200);
+                } else {
+                    return response()->json(['message' => 'Filière non trouvé !', 'status' => 404], 404);
+                }
+            } catch (\Exception $e) {   
+                // Gérez l'erreur et renvoyez une réponse d'erreur appropriée
+                return response()->json(['message' => 'Une erreur interne s\'est produite.', 'status' => 500], 500);
+            }
     }
 
     /**

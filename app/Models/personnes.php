@@ -31,12 +31,4 @@ class personnes extends Model
         'telephone',
         'date_inscription',
     ];
-
-    protected $with = ['filieres'];
-
-    public function filieres(){
-        return $this->belongsTo(filieres::class, 'filieres_id', 'id');
-    }
-
-
 }

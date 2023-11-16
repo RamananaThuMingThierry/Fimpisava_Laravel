@@ -17,10 +17,4 @@ class filieres extends Model
     protected $fillable = [
         'nom_filieres'
     ];
-
-    protected $with = ['personnes'];
-
-    public function personnes(){
-        return $this->hasMany(personnes::class);
-    } 
 }
