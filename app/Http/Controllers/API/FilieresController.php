@@ -79,9 +79,58 @@ class FilieresController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, filieres $filieres)
+    public function modifier_un_filiere(Request $request, string $id)
     {
-        //
+       
+        $autorisation = false;
+
+        $nom_filieres = $request->nom_filieres;
+
+        $verifier_si_filiere_existe_dans_bd = DB::table('filieres')->where('id', $id)->exists();
+
+        if($verifier_si_filiere_existe_dans_bd){
+ 
+            $verifier_si_il_existe = DB::table('filieres')->where('nom_filieres', $nom_filieres)->exists();
+
+            if($verifier_si_il_existe){
+                
+                $filiere = DB::table('filieres')->where('nom_filieres', $nom_filieres)->first();
+                
+                if($filiere->nom_filieres === $nom_filieres && $filiere->id == $id){
+                    $autorisation = true;
+                }
+                
+            }else{
+                $autorisation = true;
+            }
+
+            if($autorisation){
+                
+                DB::table('filieres')->where('id', $id)->update(
+                    [
+                        'nom_filieres' => $nom_filieres
+                    ]
+                );
+
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Modification efféctuer !'
+                ]);
+
+            }else{
+                
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Ce filière existe déjà !'
+                ]);
+
+            }
+        }else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'Aucun résultat'
+            ]);
+        }
     }
 
     /**
