@@ -42,8 +42,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('recherche_un_membre/{propriete}/{value}', [PersonnesController::class, 'recherche_un_membre']);   
     Route::post('ajouter_un_membre_fimpisava', [PersonnesController::class, 'ajouter_un_membre_fimpisava']);   
     Route::get('afficher_un_membre/{id}', [PersonnesController::class, 'afficher_un_membre']);
-    Route::get('obtenir_un_membre/{id}', [PersonnesController::class, 'obtenir_un_membre']);
-    Route::post('modifier_un_membre/{id}', [PersonnesController::class, 'modifier_un_membre']);
+    Route::get('obtenir_un_membre_fimpisava/{id}', [PersonnesController::class, 'obtenir_un_membre']);
+    Route::post('modifier_un_membre_fimpisava/{id}', [PersonnesController::class, 'modifier_un_membre_fimpisava']);
 
     /** -------------------------------------------   Membres District SAMBAVA -------------------------------- **/
 

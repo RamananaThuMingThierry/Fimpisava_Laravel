@@ -114,8 +114,9 @@ class PersonnesController extends Controller
                 'message' => 'Vous existez déjà dans la base de données!'
             ]);
         }else{
+
             if($photo){
-                $file = $request->file('photo');
+                $file = $request->file("photo");
                 $extension = $file->getClientOriginalExtension();
                 $filename = time() . '.' .$extension;
                 $file->move("uploads/fimpisava/", $filename);
@@ -150,6 +151,21 @@ class PersonnesController extends Controller
         } 
     }
 
+    public function obtenir_un_membre(string $id)
+    {
+        try {
+            $membre_fimpisava = DB::table('personnes')->where('id', $id)->first();
+                if ($membre_fimpisava) {
+                    return response()->json(['membre_fimpisava' => $membre_fimpisava, 'status' => 200], 200);
+                } else {
+                    return response()->json(['message' => 'Membre non trouvé !', 'status' => 404], 404);
+                }
+            } catch (\Exception $e) {   
+                // Gérez l'erreur et renvoyez une réponse d'erreur appropriée
+                return response()->json(['message' => 'Une erreur interne s\'est produite.', 'status' => 500], 500);
+            }
+    }
+    
     public function afficher_un_membre(string $id)
     {
         try {
@@ -165,9 +181,11 @@ class PersonnesController extends Controller
             }
     }
 
-    public function update(Request $request, personnes $personnes)
+    public function modifier_un_membre_fimpisava(Request $request, String $id)
     {
-        //
+        return response()->json([
+            'membre_fimpisava' => $request->all()
+        ]);
     }
 
     public function destroy(personnes $personnes)
