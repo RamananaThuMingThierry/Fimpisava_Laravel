@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     /** -------------------------------------------   Membres FI.MPI.SAVA -------------------------------- **/
 
     Route::get('liste_des_membres_fimpisava', [PersonnesController::class, 'liste_des_membres_fimpisava']);
-    Route::get('recherche_un_membre/{propriete}/{value}', [PersonnesController::class, 'recherche_un_membre']);   
+    Route::get('recherche_un__membre_fimpisava/{propriete}/{value}', [PersonnesController::class, 'recherche_un__membre_fimpisava']);   
     Route::post('ajouter_un_membre_fimpisava', [PersonnesController::class, 'ajouter_un_membre_fimpisava']);   
     Route::get('afficher_un_membre/{id}', [PersonnesController::class, 'afficher_un_membre']);
     Route::get('obtenir_un_membre_fimpisava/{id}', [PersonnesController::class, 'obtenir_un_membre']);
