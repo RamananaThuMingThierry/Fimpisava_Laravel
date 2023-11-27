@@ -92,7 +92,7 @@ class PersonnesController extends Controller
 
     public function liste_des_membres_fimpisava()
     {
-        $liste_des_membres_fimpisava = personnes::orderBy('numero_carte', 'asc')->get();
+        $liste_des_membres_fimpisava = personnes::orderBy('numero_carte', 'desc')->get();
 
         return response()->json([
             'status' => 200,
