@@ -27,11 +27,11 @@ return new class extends Migration
             $table->string('fonction', 255)->nullable()->comment('Fonction dans la FI.MPI.S.A.V.A');
             $table->string('contact_personne')->nullable();
             $table->string('facebook')->nullable();
-            $table->string('contact_personne')->nullable()->comment('Numéro de téléphone parent ou tuteur');
+            $table->string('contact_tuteur')->nullable()->comment('Numéro de téléphone parent ou tuteur');
             $table->string('whatsApp')->nullable();
             $table->date('date_inscription')->nullable()->comment('Date d\'inscription');
             $table->foreignId('fonctions_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('niveaux_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('levels_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('filieres_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         });
     }
