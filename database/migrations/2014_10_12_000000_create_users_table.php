@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('pseudo');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('adresse')->nullable();
             $table->string('password');
+            $table->string('status')->default(0)->comment("0: En attente & 1 : Approuver");
             $table->string('roles')->default(0)->comment("0: utilisateurs et 1 : administrateurs");
             $table->rememberToken();
         });
