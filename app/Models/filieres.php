@@ -12,8 +12,6 @@ class filieres extends Model
 
     protected $table = 'filieres';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'nom_filieres'
     ];

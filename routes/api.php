@@ -29,12 +29,12 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('logout', [AuthController::class, 'logout']);
 
     /** ------------------------------------------- Filières -------------------------------------------- **/
-    Route::get('liste_des_filieres', [FilieresController::class, 'liste_des_filieres']);
-    Route::post('ajouter_un_filiere', [FilieresController::class, 'ajouter_un_filiere']); 
-    Route::get('obtenir_un_filiere/{id}', [FilieresController::class, 'obtenir_un_filiere']); 
-    Route::get('recherche_un_filiere/{value}', [FilieresController::class, 'recherche_un_filiere']);  
-    Route::post('supprimer_un_filiere/{id}', [FilieresController::class, 'supprimer_un_filiere']);  
-    Route::post('modifier_un_filiere/{id}', [FilieresController::class, 'modifier_un_filiere']);  
+    Route::get('filiere', [FilieresController::class, 'liste_des_filieres']);
+    Route::post('filiere_add', [FilieresController::class, 'ajouter_un_filiere']); 
+    Route::get('filiere_show/{id}', [FilieresController::class, 'obtenir_un_filiere']); 
+    Route::get('filiere_search/{value}', [FilieresController::class, 'recherche_un_filiere']);  
+    Route::delete('filiere_delete/{id}', [FilieresController::class, 'supprimer_un_filiere']);  
+    Route::put('filiere_update/{id}', [FilieresController::class, 'modifier_un_filiere']);  
 
     /** -------------------------------------------   Membres FI.MPI.SAVA -------------------------------- **/
 
