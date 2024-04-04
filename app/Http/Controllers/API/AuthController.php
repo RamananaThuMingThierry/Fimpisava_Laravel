@@ -7,10 +7,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    public function profile(){
+        $user = auth()->user();
+        
+        if($user){
+            return response()->json([
+                'user' => $user
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => $this->constantes['NonAuthentifier']
+            ], 401);
+        }
+    }
+
     public function login(Request $request)
     {
         
@@ -55,15 +71,26 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+
+        $pseudo = $request->pseudo;
+        $email = $request->email;
+        $contact = $request->contact;
+        $adresse = $request->adresse;
+        $password = $request->password;
         
         $validator = Validator::make($request->all(), [
             'pseudo' => 'required|max:255|unique:users',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|regex:/^[a-zA-Z0-9\.\-\_]+@[a-zA-Z0-9\.\-\_]+\.[a-zA-Z]+$/',
+            'adresse' => 'required|string',
+            'contact' => 'required|unique:users',
             'password' => 'required|min:8',
         ], [
             'pseudo.required' => 'Le champ pseudo est obligatoire',
             'email.required' => 'Le champ email est obligatoire',
+            'contact.required' => 'Le champ contact est obligatoire',
+            'adresse.required' => 'Le champ adresse est obligatoire',
             'email.unique' => 'L\'adresse email existe déjà!',
+            'contact.unique' => 'Le contact existe déjà!',
             'pseudo.unique' => 'Le pseudo existe déjà!',
             'password.required' => 'Le mot de passe est obligatoire',
             'password.min' => 'Le mot de passe doit avoir au moins 8 caractères!',
@@ -71,29 +98,40 @@ class AuthController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                'Validation_errors' => $validator->messages(),
-            ]);
+                'errors' => $validator->messages(),
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }else{
             
+            if($this->verifierNumeroTelephone($contact) == false){
+                return response()->json([
+                    'messge' => "Votre contact ". $this->constantes['Numero']
+                ], 304);
+            }
+
             $user = User::create([
-                'pseudo' => $request->pseudo,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'pseudo' => $pseudo,
+                'email' => $email,
+                'adresse' => $adresse,
+                'contact' => $contact,
+                'password' => Hash::make($password)
             ]);
 
            $token = $user->createToken($user->email.'_Token')->plainTextToken;
 
             return response()->json([
-                'status' => 200,
+               'status' => 200,
                'pseudo' => $user->pseudo,
                'token' => $token,
-                'message' => 'Inscription avec succès !',
+               'message' => 'Inscription avec succès !',
             ]);
+
         }
     }
 
     public function getUserId(Request $request){
+        
         $user = DB::table('users')->where('id', $request->user()->id)->first();
+
         if($user){
             return response()->json([
                 'status' => 200,
@@ -111,7 +149,7 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
         return response()->json([
             'status' => 200,
-            'message' => "Déconnexion effectuée",
+            'message' => $this->constantes['Deconnection'],
         ]);
     }
 

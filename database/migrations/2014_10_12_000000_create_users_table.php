@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('contact');
             $table->string('status')->default(0)->comment("0: En attente & 1 : Approuver");
-            $table->string('roles')->default(0)->comment("0: utilisateurs et 1 : administrateurs");
+            $table->string('roles')->default('Utilisateurs')->comment("0: utilisateurs et 1 : administrateurs");
             $table->rememberToken();
             $table->timestamps();
         });

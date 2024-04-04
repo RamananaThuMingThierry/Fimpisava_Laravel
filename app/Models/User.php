@@ -24,11 +24,12 @@ class User extends Authenticatable
         'pseudo',
         'email',
         'password',
+        'adresse',
+        'status',
+        'contact',
         'roles'
     ];
     
-    public $timestamps = false;
-
     /**
      * The attributes that should be hidden for serialization.
      *

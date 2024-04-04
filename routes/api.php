@@ -79,5 +79,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('supprimer_un_utilisateur/{id}', [UsersController::class, 'supprimer_un_utilisateur']);
 
     /**------------------------------------------------ Profile --------------------------------------------*/
+    Route::get('profile', [AuthController::class, 'profile']);
     Route::post('modifier_profile/{id}', [UsersController::class, 'modifier_un_utilisateur']);
 });
