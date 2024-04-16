@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class personnes extends Model
+class membres extends Model
 {
     use HasFactory;
 
-    protected $table = 'personnes';
+    protected $table = 'membres';
 
     public $timestamps = false;
 
@@ -23,12 +23,17 @@ class personnes extends Model
         'filieres_id',
         'niveau',
         'district',
+        'genre',
         'adresse',
         'profession',
-        'fonction',
+        'fonctions_id',
+        'levels_id',
+        'filires_id',
         'contact',
         'facebook',
-        'telephone',
+        'contact_personnel',
+        'contact_tuteur',
+        'sympathisant',
         'date_inscription',
     ];
 }

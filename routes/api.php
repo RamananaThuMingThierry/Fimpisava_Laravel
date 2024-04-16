@@ -6,8 +6,8 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Controllers\API\FilieresController;
 use App\Http\Controllers\API\FonctionsController;
+use App\Http\Controllers\API\MembresController;
 use App\Http\Controllers\API\NiveauController;
-use App\Http\Controllers\API\PersonnesController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('getUser', [AuthController::class, 'getUserId']);
 
     /** ------------------------------------------- Statistiques ------------------------------------ **/
-    Route::get('statistiques', [PersonnesController::class, 'statistiques']);
+    Route::get('statistiques', [MembresController::class, 'statistiques']);
 
     /** ------------------------------------- Déconnection -------------------------------------------**/
     Route::post('logout', [AuthController::class, 'logout']);
@@ -57,36 +57,35 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     /** -------------------------------------------   Membres FI.MPI.SAVA -------------------------------- **/
 
-    Route::get('liste_des_membres_fimpisava', [PersonnesController::class, 'liste_des_membres_fimpisava']);
-    Route::get('recherche_un__membre_fimpisava/{propriete}/{value}', [PersonnesController::class, 'recherche_un__membre_fimpisava']);   
-    Route::post('ajouter_un_membre_fimpisava', [PersonnesController::class, 'ajouter_un_membre_fimpisava']);   
-    Route::get('afficher_un_membre/{id}', [PersonnesController::class, 'afficher_un_membre']);
-    Route::get('obtenir_un_membre_fimpisava/{id}', [PersonnesController::class, 'obtenir_un_membre']);
-    Route::post('modifier_un_membre_fimpisava/{id}', [PersonnesController::class, 'modifier_un_membre_fimpisava']);
+    Route::get('membres', [MembresController::class, 'index']);
+    Route::get('membres_search/{value}', [MembresController::class, 'search']);   
+    Route::post('membres_add', [MembresController::class, 'store']);   
+    Route::get('membres_show/{id}', [MembresController::class, 'show']);
+    Route::post('membres_update/{id}', [MembresController::class, 'update']);
 
     /** -------------------------------------------   Membres District SAMBAVA -------------------------------- **/
 
-    Route::get('liste_des_membres_district_sambava', [PersonnesController::class, 'liste_des_membres_district_sambava']);
-    Route::get('recherche_un_membre_district_sambava/{propriete}/{value}', [PersonnesController::class, 'recherche_un_membre_district_sambava']);   
-    Route::get('afficher_un_membre_district_sambava/{id}', [PersonnesController::class, 'afficher_un_membre_district_sambava']);
+    Route::get('liste_des_membres_district_sambava', [MembresController::class, 'liste_des_membres_district_sambava']);
+    Route::get('recherche_un_membre_district_sambava/{propriete}/{value}', [MembresController::class, 'recherche_un_membre_district_sambava']);   
+    Route::get('afficher_un_membre_district_sambava/{id}', [MembresController::class, 'afficher_un_membre_district_sambava']);
    
     /** -------------------------------------------   Membres District ANTALAHA -------------------------------- **/
 
-    Route::get('liste_des_membres_district_antalaha', [PersonnesController::class, 'liste_des_membres_district_antalaha']);
-    Route::get('recherche_un_membre_district_antalaha/{propriete}/{value}', [PersonnesController::class, 'recherche_un_membre_district_antalaha']);   
-    Route::get('afficher_un_membre_antalaha/{id}', [PersonnesController::class, 'afficher_un_membre_antalaha']);
+    Route::get('liste_des_membres_district_antalaha', [MembresController::class, 'liste_des_membres_district_antalaha']);
+    Route::get('recherche_un_membre_district_antalaha/{propriete}/{value}', [MembresController::class, 'recherche_un_membre_district_antalaha']);   
+    Route::get('afficher_un_membre_antalaha/{id}', [MembresController::class, 'afficher_un_membre_antalaha']);
     
     /** -------------------------------------------   Membres District VOHEMAR -------------------------------- **/
 
-    Route::get('liste_des_membres_district_vohemar', [PersonnesController::class, 'liste_des_membres_district_vohemar']);
-    Route::get('recherche_un_membre_district_vohemar/{propriete}/{value}', [PersonnesController::class, 'recherche_un_membre_district_vohemar']);   
-    Route::get('afficher_un_membre_vohemar/{id}', [PersonnesController::class, 'afficher_un_membre_vohemar']);
+    Route::get('liste_des_membres_district_vohemar', [MembresController::class, 'liste_des_membres_district_vohemar']);
+    Route::get('recherche_un_membre_district_vohemar/{propriete}/{value}', [MembresController::class, 'recherche_un_membre_district_vohemar']);   
+    Route::get('afficher_un_membre_vohemar/{id}', [MembresController::class, 'afficher_un_membre_vohemar']);
     
     /** -------------------------------------------   Membres District ANDAPA -------------------------------- **/
 
-    Route::get('liste_des_membres_district_andapa', [PersonnesController::class, 'liste_des_membres_district_andapa']);
-    Route::get('recherche_un_membre_district_andapa/{propriete}/{value}', [PersonnesController::class, 'recherche_un_membre_district_andapa']);   
-    Route::get('afficher_un_membre_andapa/{id}', [PersonnesController::class, 'afficher_un_membre_andapa']);
+    Route::get('liste_des_membres_district_andapa', [MembresController::class, 'liste_des_membres_district_andapa']);
+    Route::get('recherche_un_membre_district_andapa/{propriete}/{value}', [MembresController::class, 'recherche_un_membre_district_andapa']);   
+    Route::get('afficher_un_membre_andapa/{id}', [MembresController::class, 'afficher_un_membre_andapa']);
     
     /*------------------------------------------------------ Utilisateurs -----------------------------------**/
 

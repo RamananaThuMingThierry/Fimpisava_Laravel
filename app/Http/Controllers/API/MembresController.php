@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\personnes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\membres;
 use Nette\Utils\Strings;
 
-class PersonnesController extends Controller
+class MembresController extends Controller
 {
 
     public function recherche_un__membre_fimpisava(string $propriete, string $value){
-        $personne = personnes::where($propriete,'like',"%$value%")->get();
+        $membre = membres::where($propriete,'like',"%$value%")->get();
 
-        if($personne->count() == 0){
+        if($membre->count() == 0){
             return response()->json([
                 'status' => 404,
                 'message' => 'Aucun résultat !'
@@ -22,7 +22,7 @@ class PersonnesController extends Controller
         }else{
             return response()->json([
                 'status' => 200,
-                'recherche_un__membre_fimpisava' => $personne
+                'recherche_un__membre_fimpisava' => $membre
             ]);
         }
 
@@ -30,11 +30,11 @@ class PersonnesController extends Controller
 
     public function statistiques()
     {
-        $membresFIMPISAVA = personnes::all();
-        $district_sambava = personnes::where('district', 'Sambava')->get();
-        $district_antalaha = personnes::where('district', 'Antalaha')->get();
-        $district_vohemar = personnes::where('district', 'Vohemar')->get();
-        $district_andapa = personnes::where('district', 'Andapa')->get();
+        $membresFIMPISAVA = membres::all();
+        $district_sambava = membres::where('district', 'Sambava')->get();
+        $district_antalaha = membres::where('district', 'Antalaha')->get();
+        $district_vohemar = membres::where('district', 'Vohemar')->get();
+        $district_andapa = membres::where('district', 'Andapa')->get();
         
         return response()->json([
             'status' => 200,
@@ -47,7 +47,7 @@ class PersonnesController extends Controller
     }
     
     public function liste_des_membres_district_sambava(){
-        $liste_des_membres_district_sambava = personnes::orderBy('nom', 'asc')
+        $liste_des_membres_district_sambava = membres::orderBy('nom', 'asc')
             ->where('district', 'Sambava')        
             ->get();
 
@@ -58,7 +58,7 @@ class PersonnesController extends Controller
     }
 
     public function liste_des_membres_district_antalaha(){
-        $liste_des_membres_district_antalaha = personnes::orderBy('nom', 'asc')
+        $liste_des_membres_district_antalaha = membres::orderBy('nom', 'asc')
             ->where('district', 'Antalaha')        
             ->get();
 
@@ -69,7 +69,7 @@ class PersonnesController extends Controller
     }
     
     public function liste_des_membres_district_vohemar(){
-        $liste_des_membres_district_vohemar = personnes::orderBy('nom', 'asc')
+        $liste_des_membres_district_vohemar = membres::orderBy('nom', 'asc')
             ->where('district', 'Vohemar')        
             ->get();
 
@@ -80,7 +80,7 @@ class PersonnesController extends Controller
     }
     
     public function liste_des_membres_district_andapa(){
-        $liste_des_membres_district_andapa = personnes::orderBy('nom', 'asc')
+        $liste_des_membres_district_andapa = membres::orderBy('nom', 'asc')
             ->where('district', 'Andapa')        
             ->get();
 
@@ -90,18 +90,18 @@ class PersonnesController extends Controller
         ]);
     }
 
-    public function liste_des_membres_fimpisava()
+    /** ======================================= Liste des membre FIMPISAVA =================================== */
+    public function index()
     {
-        $liste_des_membres_fimpisava = personnes::orderBy('numero_carte', 'desc')->get();
+        $membres = membres::orderBy('numero_carte', 'desc')->get();
 
         return response()->json([
-            'status' => 200,
-            'liste_des_membres_fimpisava' => $liste_des_membres_fimpisava
-        ]);
+            'membres' => $membres
+        ], 200);
 
     }
 
-    public function ajouter_un_membre_fimpisava(Request $request)
+    public function store(Request $request)
     {
         $photo = $request->hasFile("photo");
         $numero_carte = $request->numero_carte;
@@ -122,7 +122,7 @@ class PersonnesController extends Controller
 
         $concatenation_nom_prenom = $nom .' '. $prenom;
 
-        $verifier_conctatenation_nom_prenom = DB::table('personnes')
+        $verifier_conctatenation_nom_prenom = DB::table('membres')
             ->select('*')
             ->whereRaw('CONCAT(nom, " ", prenom) = ?', [$concatenation_nom_prenom])
             ->exists();
@@ -144,7 +144,7 @@ class PersonnesController extends Controller
                 $image = null;
             }
 
-            DB::table('personnes')->insert([
+            DB::table('membres')->insert([
                 'photo' => $image,
                 'numero_carte' => $numero_carte,
                 'nom' => $nom,
@@ -170,10 +170,10 @@ class PersonnesController extends Controller
         } 
     }
 
-    public function obtenir_un_membre(string $id)
+    public function show(string $id)
     {
         try {
-            $membre_fimpisava = DB::table('personnes')->where('id', $id)->first();
+            $membre_fimpisava = DB::table('membres')->where('id', $id)->first();
                 if ($membre_fimpisava) {
                     return response()->json(['membre_fimpisava' => $membre_fimpisava, 'status' => 200], 200);
                 } else {
@@ -188,7 +188,7 @@ class PersonnesController extends Controller
     public function afficher_un_membre(string $id)
     {
         try {
-            $membre_fimpisava = DB::table('personnes')->where('id', $id)->first();
+            $membre_fimpisava = DB::table('membres')->where('id', $id)->first();
                 if ($membre_fimpisava) {
                     return response()->json(['membre_fimpisava' => $membre_fimpisava, 'status' => 200], 200);
                 } else {
@@ -200,7 +200,7 @@ class PersonnesController extends Controller
             }
     }
 
-    public function modifier_un_membre_fimpisava(Request $request, String $id)
+    public function update(Request $request, String $id)
     {
         $autorisation = false;
         $photo = $request->hasFile("photo");
@@ -221,21 +221,21 @@ class PersonnesController extends Controller
         $date_inscription = $request->date_inscription;
         $concatenation_nom_prenom = $nom .' '. $prenom;
 
-        $personne = DB::table('personnes')->where('id', $id)->first();
-        $verifier_si_ce_personne_existe = DB::table('personnes')->where('id', $id)->exists();
+        $membre = DB::table('membres')->where('id', $id)->first();
+        $verifier_si_ce_membre_existe = DB::table('membres')->where('id', $id)->exists();
 
-        if($verifier_si_ce_personne_existe){
-                $existe_concatenation_nom_prenom = DB::table('personnes')
+        if($verifier_si_ce_membre_existe){
+                $existe_concatenation_nom_prenom = DB::table('membres')
                 ->select('*')
                 ->whereRaw('CONCAT(nom, " ", prenom) = ?', [$concatenation_nom_prenom])
                 ->exists();
                 
             if($existe_concatenation_nom_prenom){
-                $verifier_conctatenation_nom_prenom = DB::table('personnes')
+                $verifier_conctatenation_nom_prenom = DB::table('membres')
                 ->select('*')
                 ->whereRaw('CONCAT(nom, " ", prenom) = ?', [$concatenation_nom_prenom])
                 ->first();
-                if(($verifier_conctatenation_nom_prenom->nom == $personne->nom) && ($verifier_conctatenation_nom_prenom->prenom == $personne->prenom)){
+                if(($verifier_conctatenation_nom_prenom->nom == $membre->nom) && ($verifier_conctatenation_nom_prenom->prenom == $membre->prenom)){
                     $autorisation = true;
                 }
             }else{
@@ -250,7 +250,7 @@ class PersonnesController extends Controller
                     $file->move("uploads/fimpisava/", $filename);
                     $image = 'uploads/fimpisava/'.$filename;
                     
-                    DB::table('personnes')->where('id', $id)->update([
+                    DB::table('membres')->where('id', $id)->update([
                         'photo' => $image,
                         'numero_carte' => $numero_carte,
                         'nom' => $nom,
@@ -270,7 +270,7 @@ class PersonnesController extends Controller
                     ]);
                 }else{
                     
-                    DB::table('personnes')->where('id', $id)->update([
+                    DB::table('membres')->where('id', $id)->update([
                         'numero_carte' => $numero_carte,
                         'nom' => $nom,
                         'prenom' => $prenom,
@@ -306,7 +306,7 @@ class PersonnesController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         try 
         {
