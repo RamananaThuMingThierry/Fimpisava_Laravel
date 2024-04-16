@@ -41,28 +41,26 @@ class AuthController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                'Validation_errors' => $validator->messages(),
+                'errors' => $validator->messages(),
             ]);
         }else{
        
             $user = User::where('email', $request->email)->first();
 
             if(!$user || !Hash::check($request->password, $user->password)){
+                
                 return response()->json([
-                    'status' => 401,
                     'message' => 'Informations d\'identification invalides',
-                ]);
+                ], 403);
 
             }else{
                 
                 $token = $user->createToken($user->email.'_Token')->plainTextToken;
             
                 return response()->json([
-                    'status' => 200,
-                    'pseudo' => $user->pseudo,
+                    'user' => $user,
                     'token' => $token,
-                    'message' => 'Connexion avec succès !',
-                ]);
+                ], 200);
             }
 
             

@@ -11,16 +11,17 @@ use Illuminate\Support\Facades\Validator;
 
 class FilieresController extends Controller
 {
-    public function liste_des_filieres(){
+    /**  ====================================== Liste des FIlières ================================ **/
+    public function index(){
 
         $user = auth()->user();
 
         if($user){
             
             $liste_des_filieres =  filieres::orderBy('nom_filieres', 'asc')->get();
-     
+        
             return response()->json([
-               'filieres' => $liste_des_filieres,
+                'filieres' => $liste_des_filieres,
             ], 200);
 
         }else{
@@ -28,12 +29,10 @@ class FilieresController extends Controller
                 'message' => $this->constantes['NonAuthentifier']
             ], 401);
         }
-      }
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function ajouter_un_filiere(Request $request)
+    /** ====================================== Créer un filière =================================== **/
+    public function store(Request $request)
     {   
         $user = auth()->user();
 
@@ -71,7 +70,8 @@ class FilieresController extends Controller
         }
     }
  
-    public function recherche_un_filiere(string $value)
+    /** ==================================== Recherche un filière ===============================  **/
+    public function search(string $value)
     {
         $user = auth()->user();
 
@@ -92,7 +92,8 @@ class FilieresController extends Controller
         }
     }
 
-    public function obtenir_un_filiere(string $filiere_id)
+    /** ===================================== Afficher un filière ===============================  **/
+    public function show(string $filiere_id)
     {
         $user = auth()->user();
 
@@ -124,10 +125,8 @@ class FilieresController extends Controller
             
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function modifier_un_filiere(Request $request, string $filiere_id)
+    /** ====================================== Modifier un filière ==============================  **/
+    public function update(Request $request, string $filiere_id)
     {
 
         $user = auth()->user();
@@ -193,10 +192,8 @@ class FilieresController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function supprimer_un_filiere(String $filiere_id)
+    /** ===================================== Supprimer un filière ============================== **/
+    public function delete(String $filiere_id)
     {
         try {
 

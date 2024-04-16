@@ -16,9 +16,8 @@ class UsersController extends Controller
     {
         $users = User::all();
         return response()->json([
-            'status' => 200,
-            'liste_des_utilisateurs' => $users
-        ]);
+            'users' => $users
+        ], 200);
     }
 
     public function recherche_un_utilisateur(string $propriete, string $value){ 

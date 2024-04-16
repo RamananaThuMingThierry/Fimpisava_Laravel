@@ -3,9 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\FilieresController;
-use App\Http\Controllers\API\PersonnesController;
 use App\Http\Controllers\API\UsersController;
+use App\Http\Controllers\API\FilieresController;
+use App\Http\Controllers\API\FonctionsController;
+use App\Http\Controllers\API\NiveauController;
+use App\Http\Controllers\API\PersonnesController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -29,12 +31,29 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('logout', [AuthController::class, 'logout']);
 
     /** ------------------------------------------- Filières -------------------------------------------- **/
-    Route::get('filiere', [FilieresController::class, 'liste_des_filieres']);
-    Route::post('filiere_add', [FilieresController::class, 'ajouter_un_filiere']); 
-    Route::get('filiere_show/{id}', [FilieresController::class, 'obtenir_un_filiere']); 
-    Route::get('filiere_search/{value}', [FilieresController::class, 'recherche_un_filiere']);  
-    Route::delete('filiere_delete/{id}', [FilieresController::class, 'supprimer_un_filiere']);  
-    Route::put('filiere_update/{id}', [FilieresController::class, 'modifier_un_filiere']);  
+    Route::get('filieres', [FilieresController::class, 'index']);
+    Route::post('filieres_add', [FilieresController::class, 'store']); 
+    Route::get('filieres_show/{id}', [FilieresController::class, 'show']); 
+    Route::get('filieres_search/{value}', [FilieresController::class, 'search']);  
+    Route::delete('filieres_delete/{id}', [FilieresController::class, 'delete']);  
+    Route::put('filieres_update/{id}', [FilieresController::class, 'update']);  
+
+     
+    /** ------------ Niveau ------------ */
+    Route::get('/niveau', [NiveauController::class, "index"]);
+    Route::post('/niveau', [NiveauController::class, "store"]);
+    Route::get('/niveau/{id}', [NiveauController::class, "show"]);
+    Route::put('/niveau/{id}', [NiveauController::class, "update"]);
+    Route::get('/niveau_search/{id}', [NiveauController::class, "search"]);
+    Route::delete('/niveau/{id}', [NiveauController::class, "delete"]);
+
+     /** ==================================== Fonctions ============================== **/
+     Route::get('fonctions', [FonctionsController::class, 'index']);
+     Route::post('fonctions_add', [FonctionsController::class, 'store']); 
+     Route::get('fonctions_show/{id}', [FonctionsController::class, 'show']); 
+     Route::get('fonctions_search/{value}', [FonctionsController::class, 'search']);  
+     Route::delete('fonctions_delete/{id}', [FonctionsController::class, 'delete']);  
+     Route::put('fonctions_update/{id}', [FonctionsController::class, 'update']);  
 
     /** -------------------------------------------   Membres FI.MPI.SAVA -------------------------------- **/
 
@@ -71,12 +90,12 @@ Route::middleware(['auth:sanctum'])->group(function(){
     
     /*------------------------------------------------------ Utilisateurs -----------------------------------**/
 
-    Route::get('liste_des_utilisateurs', [UsersController::class, 'liste_des_utilisateurs']);
-    Route::get('afficher_un_utilisateur/{id}', [UsersController::class, 'afficher_un_utilisateur']);
-    Route::get('recherche_un_utilisateur/{propriete}/{value}', [UsersController::class, 'recherche_un_utilisateur']);   
-    Route::get('obtenir_un_utilisateur/{id}', [UsersController::class, 'obtenir_un_utilisateur']); 
-    Route::post('modifier_un_utilisateur/{id}', [UsersController::class, 'modifier_un_utilisateur']);
-    Route::post('supprimer_un_utilisateur/{id}', [UsersController::class, 'supprimer_un_utilisateur']);
+    Route::get('/users', [AuthController::class, 'profile']);
+    Route::get('/users_show/{id}', [UsersController::class, 'afficher_un_utilisateur']);
+    Route::get('/users_search/{propriete}/{value}', [UsersController::class, 'recherche_un_utilisateur']);   
+    Route::get('/users_get/{id}', [UsersController::class, 'obtenir_un_utilisateur']); 
+    Route::post('/users_update/{id}', [UsersController::class, 'modifier_un_utilisateur']);
+    Route::post('/users_delete/{id}', [UsersController::class, 'supprimer_un_utilisateur']);
 
     /**------------------------------------------------ Profile --------------------------------------------*/
     Route::get('profile', [AuthController::class, 'profile']);
